@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/remote-application-profile-v1.json",
+  "title": "Remote application profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol",
+    "version",
+    "authority",
+    "availability",
+    "roles",
+    "scopes",
+    "actions",
+    "state",
+    "authentication",
+    "transports",
+    "limits",
+    "privacy"
+  ],
+  "properties": {
+    "protocol": { "$ref": "#/$defs/token" },
+    "version": { "type": "integer", "minimum": 1, "maximum": 2147483647 },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owner", "revision", "commandDedupe"],
+      "properties": {
+        "owner": { "const": "rust" },
+        "revision": { "enum": ["monotonic-per-authority-generation"] },
+        "commandDedupe": { "enum": ["generation-principal-command-id-plus-fingerprint"] }
+      }
+    },
+    "availability": {
+      "enum": ["manual-session", "app-lifetime-beacon", "supervised-login-service"]
+    },
+    "roles": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/token" }
+    },
+    "scopes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/token" }
+    },
+    "actions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 128,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "scope", "consequential", "arguments"],
+        "properties": {
+          "name": { "$ref": "#/$defs/token" },
+          "scope": { "$ref": "#/$defs/token" },
+          "consequential": { "type": "boolean" },
+          "arguments": { "type": "object" }
+        }
+      }
+    },
+    "state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "containsNativePaths", "snapshotRecovery"],
+      "properties": {
+        "schema": { "type": "object" },
+        "containsNativePaths": { "const": false },
+        "snapshotRecovery": { "const": true }
+      }
+    },
+    "authentication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["humanPassword", "highEntropyInvitation", "rememberedBrowser"],
+      "properties": {
+        "humanPassword": { "enum": ["opaque", "spake2-plus", "spake2", "disabled"] },
+        "highEntropyInvitation": { "enum": ["brsp-mutual-hmac", "disabled"] },
+        "rememberedBrowser": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "maximumTtlSeconds", "revocable"],
+          "properties": {
+            "mode": { "enum": ["proof-of-possession-webcrypto", "opaque-bearer-fallback", "disabled"] },
+            "maximumTtlSeconds": { "type": "integer", "minimum": 60, "maximum": 86400 },
+            "revocable": { "const": true }
+          }
+        }
+      }
+    },
+    "transports": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["universal", "controlLane", "stateLane", "bulkLane", "routeReporting"],
+      "properties": {
+        "universal": { "enum": ["webrtc", "wss"] },
+        "optionalFastPath": { "enum": ["webtransport", "none"] },
+        "controlLane": { "const": "reliable-ordered" },
+        "stateLane": { "enum": ["latest-unordered-zero-retry", "reliable-coalesced"] },
+        "bulkLane": { "const": "reliable-ordered-binary" },
+        "routeReporting": { "const": "direct-relay-unknown" }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["controlMessageBytes", "stateMessageBytes", "bulkFrameBytes", "bulkBufferedBytes", "commandTimeoutMs"],
+      "properties": {
+        "controlMessageBytes": { "type": "integer", "minimum": 256, "maximum": 1048576 },
+        "stateMessageBytes": { "type": "integer", "minimum": 256, "maximum": 4194304 },
+        "bulkFrameBytes": { "type": "integer", "minimum": 1024, "maximum": 1048576 },
+        "bulkBufferedBytes": { "type": "integer", "minimum": 65536, "maximum": 67108864 },
+        "commandTimeoutMs": { "type": "integer", "minimum": 100, "maximum": 120000 }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["staticHostContainsUserData", "nativePathsOnWire", "secretsInUrls", "remoteDiagnosticsOptIn"],
+      "properties": {
+        "staticHostContainsUserData": { "const": false },
+        "nativePathsOnWire": { "const": false },
+        "secretsInUrls": { "const": false },
+        "remoteDiagnosticsOptIn": { "const": true }
+      }
+    }
+  },
+  "$defs": {
+    "token": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    }
+  }
+}

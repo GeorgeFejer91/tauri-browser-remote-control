@@ -1,0 +1,72 @@
+{
+  "protocol": "example.remote",
+  "version": 1,
+  "authority": {
+    "owner": "rust",
+    "revision": "monotonic-per-authority-generation",
+    "commandDedupe": "generation-principal-command-id-plus-fingerprint"
+  },
+  "availability": "manual-session",
+  "roles": ["observer", "controller", "uploader"],
+  "scopes": ["example.read", "example.control", "example.upload"],
+  "actions": [
+    {
+      "name": "set_level",
+      "scope": "example.control",
+      "consequential": true,
+      "arguments": {
+        "value": "integer 0..100"
+      }
+    },
+    {
+      "name": "activate",
+      "scope": "example.control",
+      "consequential": true,
+      "arguments": {}
+    },
+    {
+      "name": "deactivate",
+      "scope": "example.control",
+      "consequential": true,
+      "arguments": {}
+    }
+  ],
+  "state": {
+    "schema": {
+      "active": "boolean",
+      "level": "integer 0..100"
+    },
+    "containsNativePaths": false,
+    "snapshotRecovery": true
+  },
+  "authentication": {
+    "humanPassword": "opaque",
+    "highEntropyInvitation": "brsp-mutual-hmac",
+    "rememberedBrowser": {
+      "mode": "proof-of-possession-webcrypto",
+      "maximumTtlSeconds": 86400,
+      "revocable": true
+    }
+  },
+  "transports": {
+    "universal": "webrtc",
+    "optionalFastPath": "none",
+    "controlLane": "reliable-ordered",
+    "stateLane": "latest-unordered-zero-retry",
+    "bulkLane": "reliable-ordered-binary",
+    "routeReporting": "direct-relay-unknown"
+  },
+  "limits": {
+    "controlMessageBytes": 16384,
+    "stateMessageBytes": 8192,
+    "bulkFrameBytes": 65536,
+    "bulkBufferedBytes": 1048576,
+    "commandTimeoutMs": 10000
+  },
+  "privacy": {
+    "staticHostContainsUserData": false,
+    "nativePathsOnWire": false,
+    "secretsInUrls": false,
+    "remoteDiagnosticsOptIn": true
+  }
+}

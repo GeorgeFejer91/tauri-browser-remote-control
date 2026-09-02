@@ -1,0 +1,5 @@
+interface:
+  display_name: "Tauri Browser Remote Control"
+  short_description: "Build secure Tauri apps with browser remote control"
+  brand_color: "#0F766E"
+  default_prompt: "Use $tauri-browser-remote-control to design and implement a secure browser companion for my Rust/Tauri app."
