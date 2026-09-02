@@ -77,7 +77,8 @@ If Tauri's system WebView supports the exact required WebRTC/media/file behavior
 If it does not, use a dedicated browser process or native transport adapter while keeping Rust authoritative. A dedicated Chromium launcher should:
 
 - select a known compatible executable without executing an arbitrary path from remote input;
-- use a private product profile and bounded debugging exposure only in test/support builds;
+- use a private product profile and keep debugging/inspection disabled in ordinary launches;
+- enable bounded inspection only through an explicit test/support path, bind it to loopback (for example, `127.0.0.1`) rather than a LAN or public interface, and use unconditional cleanup to remove the flag, restart normally, and verify the port closed;
 - pass a high-entropy loopback bootstrap without logging it;
 - retain the child handle and distinguish window close, process crash, and app shutdown;
 - cleanly stop or let a declared supervisor restart it;

@@ -85,6 +85,8 @@ Zuradio's shipped MVP used domain-separated password derivation/HMAC and a 24-ho
 | An installed always-on beacon using the same password interfered with isolated tests. | Generate isolated passwords/routes/profiles/ports and explicitly separate installed from test authorities. |
 | Unit/API checks passed while browser/native paths could still fail. | Require a real browser to authenticate, apply an action, observe revision/state, and exercise the installed/public path. |
 | A Tauri fallback compiled while the qualified Chromium path carried WebRTC. | Name which runtime was exercised; compiling another adapter is not equivalent evidence. |
+| Installed public-path automation needed to inspect the dedicated Chromium host. | Keep inspection disabled by default; enable it only through a scoped qualification/support path, bind it explicitly to loopback, and use unconditional cleanup to restart without it and verify closure. |
+| A real installed-path gate deliberately changed playback while proving control. | Snapshot affected product state and restore it from unconditional cleanup, including after failed assertions; verify the restoration. |
 | Desktop automation left physical-phone, forced-TURN, endurance, or platform gaps. | Keep unrun matrix entries visible and narrow release claims; never silently waive the gate. |
 
 ## Case-Study Measurements

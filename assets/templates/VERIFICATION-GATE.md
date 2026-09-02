@@ -24,7 +24,7 @@ Fill these before implementation:
 5. Run the real browser-to-authority scenarios across the supported browser matrix.
 6. Run direct, forced-relay, restrictive failure, reconnect, sleep/wake, and network-handoff cases relevant to the transport claim.
 7. Exercise the exact packaged/installed host adapter and production CSP/capabilities.
-8. Fetch the public static companion and prove authentication, snapshot, one applied action, and promised media/transfer against the installed app.
+8. Snapshot affected product state, fetch the public static companion, and prove authentication, snapshot, one applied action, and promised media/transfer against the installed app. Keep inspection disabled by default; if temporarily enabled, bind it to loopback only and use unconditional cleanup to restart without it and verify closure. Restore and verify the original product state, including after failures.
 9. If supervised, kill only the exact host process, prove distinct replacement and fresh discoverability without product activation, test deliberate off, then restore.
 10. Record commands, pass counts, versions, route evidence, benchmark/resource artifacts, hashes, and all not-run matrix entries.
 

@@ -99,7 +99,9 @@ If a dedicated Chromium host is the qualified adapter, exercise it; a Tauri fall
 
 Fetch the public HTTPS companion, verify its intended build, and connect it to the real installed app. Wait for actual host readiness, then prove authentication, snapshot, one control action/outcome, and any promised media/transfer behavior. Confirm the static host contains no user data or secrets.
 
-Service-worker caches must not mask an obsolete build. Close inspection/debug ports and restore the normal service state afterward.
+Before issuing consequential actions against an installed user profile, snapshot the affected product state. Restore it from a `finally`/unconditional cleanup path even when an assertion fails, then verify the restoration. Prefer a disposable profile where that still exercises the real installed route.
+
+Service-worker caches must not mask an obsolete build. Browser inspection must be disabled in the ordinary launcher. If the gate temporarily enables an endpoint, bind it explicitly to loopback, never a LAN or public interface; unconditional cleanup must disable it, restart the normal host if necessary, and verify the endpoint is closed.
 
 ### 9. Supervision gate
 
@@ -147,7 +149,8 @@ Measure from observable user readiness. Starting a timer before the host has act
 - isolate test data, app profile, password, rooms, ports, and device records;
 - do not let an installed always-ready beacon compete with an isolated test authority;
 - retain sanitized logs, traces, screenshots/video only where useful, and benchmark JSON;
-- clean up processes, profiles, ports, test device records, and staging directories.
+- clean up processes, profiles, ports, test device records, and staging directories;
+- restore any pre-existing user/product state changed by installed-path qualification, including on failure.
 
 An existing `target/release` binary or `dist` directory is not freshness evidence.
 
