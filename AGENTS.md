@@ -1,5 +1,7 @@
 # Repository instructions
 
+> Mandatory first read: [for-ai/README.md](./for-ai/README.md). It is the YAGNI control-plane router; then follow the project-specific rules below.
+
 Read `SKILL.md` and the references relevant to the requested change before editing.
 
 Preserve the core boundary: one Rust authority, typed application actions, separate control/state/bulk lanes, explicit authentication and authorization, bounded resources, and evidence-based completion claims.
