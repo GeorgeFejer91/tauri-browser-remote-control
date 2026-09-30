@@ -129,6 +129,9 @@ Stop and get explicit user direction before introducing any of these beyond the 
 
 ## Reusable Materials
 
+For experiment remote viewers hosted in recorder tabs, read [experiment-remote-panels.md](references/experiment-remote-panels.md) for Remote Panel/1 descriptors, stable controller paths, opaque-frame compatibility, desktop-to-phone mirroring and link/QR registration. Preserve each target's authentication and action authority.
+
+
 - `assets/starter/`: transport-neutral contracts plus tested Rust/browser authority scaffolds. They intentionally omit PAKE internals and transport vendor credentials.
 - `assets/templates/`: application profile, threat model, architecture decision, repository instructions, and qualification-gate templates.
 - `scripts/scaffold_remote_control.py`: copies the starter materials into an empty target without overwriting files.
